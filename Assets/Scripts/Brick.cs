@@ -10,27 +10,53 @@ public class Brick : MonoBehaviour
     
     public int PointValue;
 
+    public Material brick1Material;
+    public Material brick2Material;
+    public Material brick3Material;
+    public Material brick4Material;
+    public Material brick5Material;
+    public Material brick6Material;
+    public Material brick7Material;
+    public Material brick8Material;
+    public Material brick9Material;
+
     void Start()
     {
         var renderer = GetComponentInChildren<Renderer>();
 
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        switch (PointValue)
-        {
+        switch (PointValue) {
             case 1 :
-                block.SetColor("_BaseColor", Color.green);
+                renderer.material = brick1Material;
                 break;
             case 2:
-                block.SetColor("_BaseColor", Color.yellow);
+                renderer.material = brick2Material;
+                break;
+            case 3:
+                renderer.material = brick3Material;
+                break;
+            case 4:
+                renderer.material = brick4Material;
                 break;
             case 5:
-                block.SetColor("_BaseColor", Color.blue);
+                renderer.material = brick5Material;
+                break;
+            case 6:
+                renderer.material = brick6Material;
+                break;
+            case 7:
+                renderer.material = brick7Material;
+                break;
+            case 8:
+                renderer.material = brick8Material;
+                break;
+            case 9:
+                renderer.material = brick9Material;
                 break;
             default:
-                block.SetColor("_BaseColor", Color.red);
+                renderer.material = brick1Material;
                 break;
         }
-        renderer.SetPropertyBlock(block);
+
     }
 
     private void OnCollisionEnter(Collision other)
