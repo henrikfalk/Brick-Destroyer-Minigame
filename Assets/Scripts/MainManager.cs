@@ -1,8 +1,10 @@
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -14,8 +16,9 @@ public class MainManager : MonoBehaviour
     public GameObject ball;
     public GameObject paddle;
 
-    public Text scoreText;
-    public Text playerText;
+    public TextMeshProUGUI playerText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI recordText;
     public GameObject GameOverText;
     public Button quitButton;
     public Button retryButton;
@@ -23,6 +26,8 @@ public class MainManager : MonoBehaviour
     private bool m_Started = false;
     private int playerPoints;
     private string playerName = "Anonymous";
+
+    private bool isNewGame;
     
 //    private bool m_GameOver = false;
 
@@ -51,6 +56,11 @@ public class MainManager : MonoBehaviour
             playerName = GameManager.Instance.GetPlayerName();
             playerText.text = playerName;
         }
+
+        // Set record if saved
+        if (GameManager.Instance != null) {
+            recordText.text = GameManager.Instance.GetPlayerRecord();
+        }
     }
 
     private void Update()
@@ -58,14 +68,17 @@ public class MainManager : MonoBehaviour
         // Get the bricks currently alive
         bricks = GameObject.FindGameObjectsWithTag("Brick");
 
-        // If all bricks is destroyed then spawn new bricks at a higher level
-        if (bricks.Length == 0) {
+        // If all bricks is destroyed then spawn new bricks at a higher level, if new game
+        if (bricks.Length == 0 && isNewGame == false) {
             
             // Increase level
             level++;
 
             // Put some bricks up to deatroy
             InstantiateBricks(level);
+
+            // We try again from level 1
+            isNewGame = false;
         }
 
         if (!m_Started) {
@@ -79,41 +92,34 @@ public class MainManager : MonoBehaviour
                 ballRigidbody.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
         }
-/*        
-        else if (m_GameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-        }
-*/
     }
 
     // Called from Brick object before being destroyed
     void AddPoint(int point)
     {
         playerPoints += point;
-        scoreText.text = $"Score: {playerPoints}";
+        scoreText.text = playerPoints.ToString();
     }
 
     public void GameOver()
     {
-        // Reset playerpoints
-        playerPoints = 0;
+        // If record then remember in instance
+        int score = playerPoints;
+        int record = System.Convert.ToInt32(recordText.text);
 
-        // find bricks that is still alive
-        bricks = GameObject.FindGameObjectsWithTag("Brick");
-        
-        // remove them
-        for (int i = 0; i < bricks.Length; i++) {
-            Destroy(bricks[i]);
+        if (score > record) {
+            // update UI
+            recordText.text = playerPoints.ToString();
+            if (GameManager.Instance != null) {
+                GameManager.Instance.SetPlayerRecord(recordText.text);
+            }
         }
 
         // Show game over info
         GameOverText.SetActive(true);
         retryButton.gameObject.SetActive(true);
         quitButton.gameObject.SetActive(true);
+
     }
 
     public void RetryGame() {
@@ -123,14 +129,40 @@ public class MainManager : MonoBehaviour
         retryButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
 
+        // if record then update UI and save it in GameManager
+        int score = playerPoints;
+        int record = System.Convert.ToInt32(recordText.text);
+
+        if (score > record) {
+            // update UI
+            recordText.text = playerPoints.ToString();
+
+            // save record
+            if (GameManager.Instance != null) {
+                GameManager.Instance.SetPlayerRecord(recordText.text);
+            }
+
+        }
+
+        // find bricks that is still alive
+        bricks = GameObject.FindGameObjectsWithTag("Brick");
+        
+        // set flag that we want to try a new game which enables the level up stuff
+        isNewGame = true;
+        
+        // remove them
+        for (int i = 0; i < bricks.Length; i++) {
+            Destroy(bricks[i]);
+        }
+
+        // start at level 1
+        level = 1;
+
         // reset player points
         playerPoints = 0;
 
         // Reset score text
         AddPoint(0);
-
-        // start at level 1
-        level = 1;
 
         // create new ball
         GameObject obj = Instantiate(ball, ball.transform.position, Quaternion.identity);
