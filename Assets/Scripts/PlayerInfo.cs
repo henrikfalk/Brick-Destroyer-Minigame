@@ -26,6 +26,6 @@ public class PlayerInfo : IComparable<PlayerInfo>
         int thisRecord = System.Convert.ToInt32(playerRecord);
         int otherRecord = System.Convert.ToInt32(other.playerRecord);
 
-        return thisRecord.CompareTo(otherRecord);
+        return otherRecord.CompareTo(thisRecord);
     }
 }

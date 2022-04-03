@@ -22,5 +22,41 @@ MonoBehaviour:
     m_Localized: "Navn p\xE5 spiller:"
     m_Metadata:
       m_Items: []
+  - m_Id: 813965437956096
+    m_Localized: Spil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823603390705664
+    m_Localized: Indstillinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823676849745920
+    m_Localized: Highscore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823721946902528
+    m_Localized: Afslut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823774321176576
+    m_Localized: Tilbage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823859419410432
+    m_Localized: "Pr\xF8v igen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826157751201792
+    m_Localized: 'Spiller:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826287132897280
+    m_Localized: 'Point:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1120219179905024
+    m_Localized: Highscore
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

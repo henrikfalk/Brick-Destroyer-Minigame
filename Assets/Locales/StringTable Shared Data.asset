@@ -20,7 +20,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 813965437956096
-    m_Key: New Entry
+    m_Key: MENU_BUTTON_NEW_GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823603390705664
+    m_Key: MENU_BUTTON_SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823676849745920
+    m_Key: MENU_BUTTON_HIGHSCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823721946902528
+    m_Key: BUTTON_QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823774321176576
+    m_Key: BUTTON_RETURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823859419410432
+    m_Key: MAIN_BUTTON_RETRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826157751201792
+    m_Key: HIGHSCORE_PLAYER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826287132897280
+    m_Key: HIGHSCORE_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1120219179905024
+    m_Key: HIGHSCORE
     m_Metadata:
       m_Items: []
   m_Metadata:

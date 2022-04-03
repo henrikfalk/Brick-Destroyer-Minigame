@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 233454167}
   - component: {fileID: 233454166}
   m_Layer: 5
-  m_Name: BestPlayerScoreScoreText (2)
+  m_Name: BestPlayerScoreScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1112,8 +1112,10 @@ MonoBehaviour:
   ball: {fileID: 177912857}
   paddle: {fileID: 97436041}
   playerText: {fileID: 284016662}
-  scoreText: {fileID: 66477108}
-  recordText: {fileID: 439500870}
+  playerScoreText: {fileID: 66477108}
+  playerRecordText: {fileID: 439500870}
+  bestPlayerRecordNameText: {fileID: 1861294600}
+  bestPlayerRecordScoreText: {fileID: 233454166}
   GameOverText: {fileID: 688699821}
   quitButton: {fileID: 422552885}
   retryButton: {fileID: 1267117949}
@@ -2502,7 +2504,7 @@ GameObject:
   - component: {fileID: 1670258831}
   - component: {fileID: 1670258830}
   m_Layer: 5
-  m_Name: BestPlayerScoreText (1)
+  m_Name: BestPlayerScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

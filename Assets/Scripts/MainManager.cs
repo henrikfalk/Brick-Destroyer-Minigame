@@ -17,8 +17,12 @@ public class MainManager : MonoBehaviour
     public GameObject paddle;
 
     public TextMeshProUGUI playerText;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI recordText;
+    public TextMeshProUGUI playerScoreText;
+    public TextMeshProUGUI playerRecordText;
+
+    public TextMeshProUGUI bestPlayerRecordNameText;
+    public TextMeshProUGUI bestPlayerRecordScoreText;
+
     public GameObject GameOverText;
     public Button quitButton;
     public Button retryButton;
@@ -29,8 +33,6 @@ public class MainManager : MonoBehaviour
 
     private bool isNewGame;
     
-//    private bool m_GameOver = false;
-
     // Made public to be able to test different levels in the editor
     [SerializeField]private int level;
 
@@ -51,15 +53,19 @@ public class MainManager : MonoBehaviour
         // Reset score text
         AddPoint(0);
 
-        // Get playername and show the name - only if GameManager exists otherwise we are in the editor and run Main directly
+        // only if GameManager exists otherwise we are in the editor and run Main directly
         if (GameManager.Instance != null) {
+
+            // Get playername and show the name
             playerName = GameManager.Instance.GetPlayerName();
             playerText.text = playerName;
-        }
 
-        // Set record if saved
-        if (GameManager.Instance != null) {
-            recordText.text = GameManager.Instance.GetPlayerRecord();
+            // Set player score if saved
+            playerRecordText.text = GameManager.Instance.GetPlayerRecord();
+
+            // Set total record name and score
+            bestPlayerRecordNameText.text = GameManager.Instance.GetRecordName();
+            bestPlayerRecordScoreText.text = GameManager.Instance.GetRecordRecord();
         }
     }
 
@@ -81,6 +87,15 @@ public class MainManager : MonoBehaviour
             isNewGame = false;
         }
 
+        // If personal record is higher than best player/record then update UI
+        int bestRecord = System.Convert.ToInt32(playerRecordText.text);
+        if (playerPoints > bestRecord) {
+            // update UI
+            bestPlayerRecordNameText.text = playerText.text;
+            bestPlayerRecordScoreText.text = playerPoints.ToString();
+        }
+
+        // if game running then do the ball running stuff
         if (!m_Started) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 m_Started = true;
@@ -98,20 +113,22 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         playerPoints += point;
-        scoreText.text = playerPoints.ToString();
+        playerScoreText.text = playerPoints.ToString();
     }
 
     public void GameOver()
     {
         // If record then remember in instance
         int score = playerPoints;
-        int record = System.Convert.ToInt32(recordText.text);
-
-        if (score > record) {
-            // update UI
-            recordText.text = playerPoints.ToString();
-            if (GameManager.Instance != null) {
-                GameManager.Instance.SetPlayerRecord(recordText.text);
+        int record; // if we run this scene inside the Unity editor then don't update
+        if (GameManager.Instance != null) {
+            record = System.Convert.ToInt32(GameManager.Instance.GetRecordRecord());
+            if (score > record) {
+                // update UI
+                playerRecordText.text = playerPoints.ToString();
+                if (GameManager.Instance != null) {
+                    GameManager.Instance.SetPlayerRecord(playerRecordText.text);
+                }
             }
         }
 
@@ -131,15 +148,15 @@ public class MainManager : MonoBehaviour
 
         // if record then update UI and save it in GameManager
         int score = playerPoints;
-        int record = System.Convert.ToInt32(recordText.text);
+        int record = System.Convert.ToInt32(playerRecordText.text);
 
         if (score > record) {
             // update UI
-            recordText.text = playerPoints.ToString();
+            playerRecordText.text = playerPoints.ToString();
 
             // save record
             if (GameManager.Instance != null) {
-                GameManager.Instance.SetPlayerRecord(recordText.text);
+                GameManager.Instance.SetPlayerRecord(playerRecordText.text);
             }
 
         }

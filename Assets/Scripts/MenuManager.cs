@@ -33,14 +33,9 @@ public class MenuManager : MonoBehaviour
         playerNameInputField.GetComponent<TMP_InputField>().ActivateInputField();
 
         // Add Quit button if we are on Linux native
-        if (Application.platform == RuntimePlatform.LinuxPlayer) {
-            quitButton.SetActive(true);
+        if (Application.platform != RuntimePlatform.LinuxPlayer) {
+            quitButton.SetActive(false);
         }
-
-    }
-
-    // Update is called once per frame
-    void Update() {
 
     }
 
@@ -63,8 +58,14 @@ public class MenuManager : MonoBehaviour
         GameManager.Instance.SetPlayerName(playerNameInput);
 
         // Load game
-        SceneManager.LoadScene("Main");
+        GameManager.Instance.GotoScene("Main");
 
+    }
+
+    public void GotoScene(string sceneName) {
+
+        // Load specified scene
+        GameManager.Instance.GotoScene(sceneName);
     }
 
     // Quit game from native Linux build

@@ -19,6 +19,9 @@ public class SettingsManager : MonoBehaviour
 
     // return to menu
     public void ReturnToMenu() {
-        SceneManager.LoadScene("Menu");
+
+        if (GameManager.Instance != null) {
+            GameManager.Instance.GotoScene("Menu");
+        }
     }
 }

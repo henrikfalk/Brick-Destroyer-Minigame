@@ -21,8 +21,11 @@ public class GameManager : MonoBehaviour
     // last or current players record
     public string playerRecord;
 
-    // Highscorelist
+    // Playerlist
     public List<PlayerInfo> playerList = new List<PlayerInfo>();
+
+    // Highscore list
+    private List<PlayerInfo> highscoreList;
 
     // Awake is called when the script instance is being loaded
     private void Awake() {
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour
 
         // Load saved stuff
         Load();
-       
+
     }
 
     public void GotoScene(string sceneName) {
@@ -110,6 +113,48 @@ public class GameManager : MonoBehaviour
 
         // Save
         Save();
+    }
+
+    public List<PlayerInfo> GetHighscoreList() {
+
+        highscoreList = new List<PlayerInfo>();
+ 
+         // Sort the playerList using their record
+        playerList.Sort();
+
+        int players = playerList.Count;
+
+        // Add max 5 to the highscore list
+        if (players > 5) {
+            players = 5;
+        }
+
+        // Add players to the highscore list
+        for (int i = 0; i < players; i++){
+            highscoreList.Add(playerList[i]);
+        }
+
+        return highscoreList;
+    }
+
+    public string GetRecordName() {
+
+        if (playerList.Count == 0) {
+            return "";
+        }
+        playerList.Sort();
+
+        return playerList[0].playerName;
+    }
+
+    public string GetRecordRecord() {
+
+        if (playerList.Count == 0) {
+            return "";
+        }
+        playerList.Sort();
+
+        return playerList[0].playerRecord;
     }
 
     // Load and save code between sessions

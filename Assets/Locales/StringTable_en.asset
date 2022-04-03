@@ -22,5 +22,41 @@ MonoBehaviour:
     m_Localized: 'Player name:'
     m_Metadata:
       m_Items: []
+  - m_Id: 813965437956096
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823603390705664
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823676849745920
+    m_Localized: Highscore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823721946902528
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823774321176576
+    m_Localized: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 823859419410432
+    m_Localized: Retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826157751201792
+    m_Localized: 'Player:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 826287132897280
+    m_Localized: 'Score:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1120219179905024
+    m_Localized: Highscore
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
