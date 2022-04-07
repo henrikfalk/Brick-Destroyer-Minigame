@@ -17,13 +17,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     // last or current players name
-    private string playerName;
+    public string playerName;
 
     // last or current players record
-    private string playerRecord;
+    public string playerRecord;
 
     // Playerlist
-    private List<PlayerInfo> playerList = new List<PlayerInfo>();
+    public List<PlayerInfo> playerList = new List<PlayerInfo>();
 
     // Highscore list
     private List<PlayerInfo> highscoreList;

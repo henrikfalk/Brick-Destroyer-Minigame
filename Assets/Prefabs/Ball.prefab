@@ -125,3 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9378aa3f6eac646479e54cd5932ffd3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVelocity: 3
+  mainManager: {fileID: 0}
+  playerAudio: {fileID: 0}
+  brickSound: {fileID: 8300000, guid: 04c70c9557e9a128f8224a2d969325e0, type: 3}
+  paddleSound: {fileID: 8300000, guid: 469ea8e66bbc6b2c0a3b701d9015b9f2, type: 3}
+  hitSmoke: {fileID: 1822825000525694719, guid: cde8955fc65a9d01287fa516b4ce73db, type: 3}

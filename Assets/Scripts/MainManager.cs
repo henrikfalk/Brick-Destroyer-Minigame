@@ -13,10 +13,10 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody ballRigidbody;
 
-    public GameObject ballPrefab;
+    public Ball ballPrefab;
+    private GameObject ball;
 
     public GameObject paddle;
-    private GameObject ball;
 
     public TextMeshProUGUI playerText;
     public TextMeshProUGUI playerScoreText;
@@ -36,6 +36,8 @@ public class MainManager : MonoBehaviour
     private string playerName = "Anonymous";
 
     private bool isNewGame;
+
+    private bool playRecordOnce;
     
     // Made public to be able to test different levels in the editor
     [SerializeField]private int level;
@@ -45,16 +47,26 @@ public class MainManager : MonoBehaviour
     public Camera mainCamera;
     public Camera paddleCamera;
     
+    public AudioSource playerAudio;
+    public AudioClip levelSound;
+    public AudioClip recordSound;
+    public AudioClip gameOverSound;
+
     // Start is called before the first frame update
     void Start()
     {
 
+        // Remember AudioSource
+        playerAudio = GetComponent<AudioSource>();
+
+        // Set Main camera
         mainCamera.enabled = true;
         paddleCamera.gameObject.SetActive(true); // because I have disabled it in the editor
         paddleCamera.enabled = false;
 
         // create new ball
-        ball = Instantiate(ballPrefab, ballPrefab.transform.position, Quaternion.identity);
+        ball = Instantiate(ballPrefab.gameObject, ballPrefab.gameObject.transform.position, Quaternion.identity);
+        ball.GetComponent<Ball>().mainManager = this;
         ball.SetActive(true);
         ballRigidbody = ball.GetComponent<Rigidbody>();
 
@@ -102,17 +114,45 @@ public class MainManager : MonoBehaviour
             // Put some bricks up to deatroy
             InstantiateBricks(level);
 
+            // Play new level sound
+            playerAudio.PlayOneShot(levelSound,1f);
+
             // Let the ball follow Paddle   
             ball.transform.position = paddle.transform.position + new Vector3(0,0.15f,0);
             m_Started = false;
         }
 
-        // If personal record is higher than best player/record then update UI
-        int bestRecord = System.Convert.ToInt32(playerRecordText.text);
-        if (playerPoints > bestRecord) {
-            // update UI
-            bestPlayerRecordNameText.text = playerText.text;
-            bestPlayerRecordScoreText.text = playerPoints.ToString();
+        // remember player record
+        int playerRecord = System.Convert.ToInt32(playerRecordText.text);
+
+        // remember current best player record
+        int bestPlayerRecord = System.Convert.ToInt32(GameManager.Instance.GetRecordRecord());
+
+        // If personal record is higher player record or best player/record then update UI
+        if (playerPoints > playerRecord) {
+
+            // update UI and remember personal record
+            if (GameManager.Instance != null) {
+                playerRecordText.text = playerPoints.ToString();
+                GameManager.Instance.SetPlayerRecord(playerRecordText.text);
+
+
+                // If player beaten the best player ever
+                if (playerPoints > bestPlayerRecord) {
+
+                    // Update UI - The player automatically be remembered
+                    bestPlayerRecordNameText.text = playerText.text;
+                    bestPlayerRecordScoreText.text = playerPoints.ToString();
+                }
+            }
+
+            if (playRecordOnce == false) {
+                // Play only one time if record is beaten
+                playRecordOnce = true;
+
+                // Play record beaten sound
+                playerAudio.PlayOneShot(recordSound,1f);
+            }
         }
 
         // if game running then do the ball start stuff
@@ -153,20 +193,6 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
-        // If record then remember in instance
-        int score = playerPoints;
-        int record; // if we run this scene inside the Unity editor then don't update
-        if (GameManager.Instance != null) {
-            record = System.Convert.ToInt32(GameManager.Instance.GetRecordRecord());
-            if (score > record) {
-                // update UI
-                playerRecordText.text = playerPoints.ToString();
-                if (GameManager.Instance != null) {
-                    GameManager.Instance.SetPlayerRecord(playerRecordText.text);
-                }
-            }
-        }
-
         // Show game over info
         GameOverText.SetActive(true);
         retryButton.gameObject.SetActive(true);
@@ -181,31 +207,19 @@ public class MainManager : MonoBehaviour
         retryButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
 
-        // if record then update UI and save it in GameManager
-        int score = playerPoints;
-        int record = System.Convert.ToInt32(playerRecordText.text);
-
-        if (score > record) {
-            // update UI
-            playerRecordText.text = playerPoints.ToString();
-
-            // save record
-            if (GameManager.Instance != null) {
-                GameManager.Instance.SetPlayerRecord(playerRecordText.text);
-            }
-
-        }
-
         // find bricks that is still alive
         bricks = GameObject.FindGameObjectsWithTag("Brick");
-        
-        // set flag that we want to try a new game which enables the level up stuff
-        isNewGame = true;
         
         // remove them
         for (int i = 0; i < bricks.Length; i++) {
             Destroy(bricks[i]);
         }
+
+        // set flag that we want to try a new game which enables the level up stuff
+        isNewGame = true;
+
+        // Play record sound if beaten again
+        playRecordOnce = false;
 
         // start at level 1
         level = 1;
@@ -217,7 +231,8 @@ public class MainManager : MonoBehaviour
         AddPoint(0);
 
         // create new ball
-        ball = Instantiate(ballPrefab, ballPrefab.transform.position, Quaternion.identity);
+        ball = Instantiate(ballPrefab.gameObject, ballPrefab.gameObject.transform.position, Quaternion.identity);
+        ball.GetComponent<Ball>().mainManager = this;
         ball.SetActive(true);
         ballRigidbody = ball.GetComponent<Rigidbody>();
 
@@ -225,6 +240,9 @@ public class MainManager : MonoBehaviour
 
         // Reset the Paddle position
         paddle.transform.SetPositionAndRotation(new Vector3(0,0.7f,0),Quaternion.identity);
+
+        // Reset paddle size and ball velocity
+        SetBallAndPaddle();
 
         // Show instruction text to start game
         pressSpaceToText.gameObject.SetActive(true);
@@ -284,10 +302,15 @@ public class MainManager : MonoBehaviour
 
     // SetBallAndPaddle
     private void SetBallAndPaddle() {
+
+            // Use the same ball velocity and paddle size for level 1,2,3 and 4
+            ball.GetComponent<Ball>().maxVelocity = 3;
+            paddle.GetComponent<Paddle>().Speed = 4;
+
             // Change paddle with and ball velocity depending on level
             switch (level) {
                 case 1:
-                    // Use default settings
+                    paddle.transform.localScale = new Vector3(0.8f, 0.1f, 0.2f);
                     break;
                 case 2:
                     paddle.transform.localScale = new Vector3(0.6f, 0.1f, 0.2f);
