@@ -58,5 +58,57 @@ MonoBehaviour:
     m_Localized: Highscore
     m_Metadata:
       m_Items: []
+  - m_Id: 1138671173103616
+    m_Localized: Ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138751259144192
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138832624447488
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1143217949634560
+    m_Localized: Please enter a valid player name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1145265290080256
+    m_Localized: Are you sure?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1167733287415808
+    m_Localized: Reset Highscores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1233570417471488
+    m_Localized: 'Select language:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2191710290046976
+    m_Localized: Press spacebar to start!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195418830729216
+    m_Localized: 'Score:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195634027884544
+    m_Localized: 'Record:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198912409137152
+    m_Localized: 'Best player:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199079451488256
+    m_Localized: GAME OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2211510353522688
+    m_Localized: Enter name...
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

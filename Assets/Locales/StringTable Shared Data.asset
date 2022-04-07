@@ -55,6 +55,58 @@ MonoBehaviour:
     m_Key: HIGHSCORE
     m_Metadata:
       m_Items: []
+  - m_Id: 1138671173103616
+    m_Key: BUTTON_OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138751259144192
+    m_Key: BUTTON_YES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138832624447488
+    m_Key: BUTTON_NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1143217949634560
+    m_Key: MENU_POPUP_NONAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1145265290080256
+    m_Key: SETTINGS_POPUP_AREYOUSURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1167733287415808
+    m_Key: SETTINGS_RESET_HIGHSCORE_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1233570417471488
+    m_Key: SETTINGS_SELECT_LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2191710290046976
+    m_Key: MAIN_PRESS_SPACE_TO_START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195418830729216
+    m_Key: MAIN_SCORE_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195634027884544
+    m_Key: MAIN_RECORD_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198912409137152
+    m_Key: MAIN_BEST PLAYER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199079451488256
+    m_Key: MAIN_GAME_OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2211510353522688
+    m_Key: MAIN_INPUTFIELD_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

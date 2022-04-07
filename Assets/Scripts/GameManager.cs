@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -16,16 +17,19 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     // last or current players name
-    public string playerName;
+    private string playerName;
 
     // last or current players record
-    public string playerRecord;
+    private string playerRecord;
 
     // Playerlist
-    public List<PlayerInfo> playerList = new List<PlayerInfo>();
+    private List<PlayerInfo> playerList = new List<PlayerInfo>();
 
     // Highscore list
     private List<PlayerInfo> highscoreList;
+
+    // Language
+    public Locale currentLocale;
 
     // Awake is called when the script instance is being loaded
     private void Awake() {
@@ -150,20 +154,59 @@ public class GameManager : MonoBehaviour
     public string GetRecordRecord() {
 
         if (playerList.Count == 0) {
-            return "";
+
+            return "0";
         }
         playerList.Sort();
 
         return playerList[0].playerRecord;
     }
 
+    public void ResetHighscoreList() {
+        playerList =  new List<PlayerInfo>();
+
+        // not found = new player
+        playerRecord = "0";
+
+        // Add the player agin with record = 0 to the list of players
+        playerList.Add(new PlayerInfo(playerName,playerRecord));
+
+
+        // Save the stuff
+        Save();
+    }
+
+    // Get current locale
+    public Locale GetCurrentLocale() {
+        return currentLocale;
+    }
+
+    // Set current locale
+    public void SetCurrentLocale(Locale locale) {
+
+        // remember locale
+        currentLocale = locale;
+
+        LocalizationSettings.SelectedLocale = currentLocale;
+
+        // Save
+        Save();
+    }
+
     // Load and save code between sessions
     [System.Serializable]
     class SaveData {
 
+         // Name of last/current player
         public string playerNameSave;
+
+        // The player record
         public string playerRecordSave;
 
+        // The selcted language
+        public string locale; // language saved by settings
+
+        // List of players
         public List<PlayerInfo> playerListSave = new List<PlayerInfo>();
 
     }
@@ -173,6 +216,7 @@ public class GameManager : MonoBehaviour
         data.playerNameSave = playerName;
         data.playerRecordSave = playerRecord;
         data.playerListSave = playerList;
+        data.locale = currentLocale.LocaleName;
 
         string json = JsonUtility.ToJson(data);
   
@@ -193,6 +237,16 @@ public class GameManager : MonoBehaviour
 
             // Load playerlist
             playerList = data.playerListSave;
+
+            // Load Locale
+            string savedLocale = data.locale;
+            if (savedLocale != null && savedLocale.Equals("Danish") == true) {
+                currentLocale = Locale.CreateLocale(SystemLanguage.Danish);
+                LocalizationSettings.SelectedLocale = currentLocale;
+            } else { // Default language is english
+                currentLocale = Locale.CreateLocale(SystemLanguage.English);
+                LocalizationSettings.SelectedLocale = currentLocale;
+            }
 
         }
     }

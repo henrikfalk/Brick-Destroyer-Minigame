@@ -13,8 +13,10 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody ballRigidbody;
 
-    public GameObject ball;
+    public GameObject ballPrefab;
+
     public GameObject paddle;
+    private GameObject ball;
 
     public TextMeshProUGUI playerText;
     public TextMeshProUGUI playerScoreText;
@@ -22,6 +24,8 @@ public class MainManager : MonoBehaviour
 
     public TextMeshProUGUI bestPlayerRecordNameText;
     public TextMeshProUGUI bestPlayerRecordScoreText;
+
+    public TextMeshProUGUI pressSpaceToText;
 
     public GameObject GameOverText;
     public Button quitButton;
@@ -38,20 +42,31 @@ public class MainManager : MonoBehaviour
 
     private GameObject[] bricks;
 
+    public Camera mainCamera;
+    public Camera paddleCamera;
+    
     // Start is called before the first frame update
     void Start()
     {
 
+        mainCamera.enabled = true;
+        paddleCamera.gameObject.SetActive(true); // because I have disabled it in the editor
+        paddleCamera.enabled = false;
+
         // create new ball
-        GameObject obj = Instantiate(ball, ball.transform.position, Quaternion.identity);
-        obj.SetActive(true);
-        ballRigidbody = obj.GetComponent<Rigidbody>();
+        ball = Instantiate(ballPrefab, ballPrefab.transform.position, Quaternion.identity);
+        ball.SetActive(true);
+        ballRigidbody = ball.GetComponent<Rigidbody>();
 
         // Put some bricks up to destroy
         InstantiateBricks(level);
 
         // Reset score text
         AddPoint(0);
+
+        // Set ball velocity and paddle size depending on level
+        // Used if editor is running and testing higher levels
+        SetBallAndPaddle();
 
         // only if GameManager exists otherwise we are in the editor and run Main directly
         if (GameManager.Instance != null) {
@@ -67,6 +82,7 @@ public class MainManager : MonoBehaviour
             bestPlayerRecordNameText.text = GameManager.Instance.GetRecordName();
             bestPlayerRecordScoreText.text = GameManager.Instance.GetRecordRecord();
         }
+
     }
 
     private void Update()
@@ -80,11 +96,15 @@ public class MainManager : MonoBehaviour
             // Increase level
             level++;
 
+            // Set ball velocity and paddle size depending on level
+            SetBallAndPaddle();
+
             // Put some bricks up to deatroy
             InstantiateBricks(level);
 
-            // We try again from level 1
-            isNewGame = false;
+            // Let the ball follow Paddle   
+            ball.transform.position = paddle.transform.position + new Vector3(0,0.15f,0);
+            m_Started = false;
         }
 
         // If personal record is higher than best player/record then update UI
@@ -95,17 +115,32 @@ public class MainManager : MonoBehaviour
             bestPlayerRecordScoreText.text = playerPoints.ToString();
         }
 
-        // if game running then do the ball running stuff
-        if (!m_Started) {
+        // if game running then do the ball start stuff
+        if (m_Started == false) {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                m_Started = true;
-                float randomDirection = Random.Range(-1.0f, 1.0f);
-                Vector3 forceDir = new Vector3(randomDirection, 1, 0);
-                forceDir.Normalize();
 
-                ballRigidbody.transform.SetParent(null);
-                ballRigidbody.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+                    // Hide instruction text to start game
+                    pressSpaceToText.gameObject.SetActive(false);
+
+                    isNewGame = false;
+                    m_Started = true;
+
+                    float randomDirection = Random.Range(-1.0f, 1.0f);
+                    Vector3 forceDir = new Vector3(randomDirection, 1, 0);
+                    forceDir.Normalize();
+
+                    ballRigidbody.transform.SetParent(null);
+                    ballRigidbody.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+            } else {
+                // Let the ball follow Paddle
+                ball.transform.position = paddle.transform.position + new Vector3(0,0.15f,0);
             }
+        }
+        
+        // Check if we need to change camera
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            mainCamera.enabled = !mainCamera.enabled;
+            paddleCamera.enabled = !paddleCamera.enabled;
         }
     }
 
@@ -182,13 +217,18 @@ public class MainManager : MonoBehaviour
         AddPoint(0);
 
         // create new ball
-        GameObject obj = Instantiate(ball, ball.transform.position, Quaternion.identity);
-        obj.SetActive(true);
-        ballRigidbody = obj.GetComponent<Rigidbody>();
+        ball = Instantiate(ballPrefab, ballPrefab.transform.position, Quaternion.identity);
+        ball.SetActive(true);
+        ballRigidbody = ball.GetComponent<Rigidbody>();
+
         m_Started = false;
 
         // Reset the Paddle position
         paddle.transform.SetPositionAndRotation(new Vector3(0,0.7f,0),Quaternion.identity);
+
+        // Show instruction text to start game
+        pressSpaceToText.gameObject.SetActive(true);
+
 
         // Put some new bricks up to destroy
         InstantiateBricks(level);        
@@ -239,6 +279,51 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+    }
+
+    // SetBallAndPaddle
+    private void SetBallAndPaddle() {
+            // Change paddle with and ball velocity depending on level
+            switch (level) {
+                case 1:
+                    // Use default settings
+                    break;
+                case 2:
+                    paddle.transform.localScale = new Vector3(0.6f, 0.1f, 0.2f);
+                    break;
+                case 3:
+                    paddle.transform.localScale = new Vector3(0.4f, 0.1f, 0.2f);
+                    break;
+                case 4:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    break;
+                case 5:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    ball.GetComponent<Ball>().maxVelocity = 4;
+                    paddle.GetComponent<Paddle>().Speed = 5;
+                    break;
+                case 6:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    ball.GetComponent<Ball>().maxVelocity = 5;
+                    paddle.GetComponent<Paddle>().Speed = 6;
+                    break;
+                case 7:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    ball.GetComponent<Ball>().maxVelocity = 6;
+                    paddle.GetComponent<Paddle>().Speed = 7;
+                    break;
+                case 8:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    ball.GetComponent<Ball>().maxVelocity = 7;
+                    paddle.GetComponent<Paddle>().Speed = 8;
+                    break;
+                default:
+                    paddle.transform.localScale = new Vector3(0.3f, 0.1f, 0.2f);
+                    ball.GetComponent<Ball>().maxVelocity = 8;
+                    paddle.GetComponent<Paddle>().Speed = 9;
+                    break;
+            }
 
     }
 

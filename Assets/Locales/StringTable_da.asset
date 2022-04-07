@@ -58,5 +58,57 @@ MonoBehaviour:
     m_Localized: Highscore
     m_Metadata:
       m_Items: []
+  - m_Id: 1138671173103616
+    m_Localized: Ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138751259144192
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1138832624447488
+    m_Localized: Nej
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1143217949634560
+    m_Localized: Skriv venligst et rigtigt navn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1145265290080256
+    m_Localized: Er du helt sikker?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1167733287415808
+    m_Localized: Nulstil highscore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1233570417471488
+    m_Localized: "V\xE6lg sprog:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2191710290046976
+    m_Localized: "Tryk p\xE5 mellemrumstasten for at starte!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195418830729216
+    m_Localized: 'Points:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2195634027884544
+    m_Localized: 'Rekord:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198912409137152
+    m_Localized: 'Bedste spiller:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199079451488256
+    m_Localized: SPILLET ER SLUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2211510353522688
+    m_Localized: Skriv navn...
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
