@@ -33,6 +33,8 @@ Use up or down arrows on keyboard to toggle cameraview between 2D and 3D.
 ## Development environment
 Unity Editor v2020.3.32f1 running on Manjaro Linux.
 
+I used "GitKraken" as Git client.
+
 You need to open the"Menu" scene in order to run the game in the editor.
 You can however run the "Main" scene to run test the game functionality alone but it is not connected to the full game. The "Retry" button works. In the inspector for the "MainManager"  you can manually change the level parameter to test at specific level.
 
@@ -88,7 +90,7 @@ I made some game scenes:
 
 Image of level 4:
 
-<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Level-4.png" width="600" >
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Main-Level-4.png" width="600" >
 
 ## What could be enhanced?
 - The LanguagePicker could have a better implementation
