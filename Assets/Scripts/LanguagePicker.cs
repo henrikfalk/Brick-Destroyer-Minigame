@@ -59,6 +59,7 @@ public class LanguagePicker : MonoBehaviour
         return Locale.CreateLocale(SystemLanguage.English);
     }
 
+    // Select the language in the UI
     public void SetSelectedLanguage(Locale locale) {
 
         // if danish locale then the find the danish material by name

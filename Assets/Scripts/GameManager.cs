@@ -17,19 +17,19 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     // last or current players name
-    public string playerName;
+    private string playerName;
 
     // last or current players record
-    public string playerRecord;
+    private string playerRecord;
 
     // Playerlist
-    public List<PlayerInfo> playerList = new List<PlayerInfo>();
+    private List<PlayerInfo> playerList = new List<PlayerInfo>();
 
     // Highscore list
     private List<PlayerInfo> highscoreList;
 
     // Language
-    public Locale currentLocale;
+    private Locale currentLocale;
 
     // Awake is called when the script instance is being loaded
     private void Awake() {
@@ -129,8 +129,8 @@ public class GameManager : MonoBehaviour
         int players = playerList.Count;
 
         // Add max 5 to the highscore list
-        if (players > 5) {
-            players = 5;
+        if (players > 10) {
+            players = 10;
         }
 
         // Add players to the highscore list
@@ -178,6 +178,18 @@ public class GameManager : MonoBehaviour
 
     // Get current locale
     public Locale GetCurrentLocale() {
+
+        // If we don't have a Locale then this is the first run of the app
+        // Default language is English, but if Danish then use it.
+        if (currentLocale == null) {
+
+            if (LocalizationSettings.SelectedLocale.LocaleName.Equals("Danish (da)") == true ){
+                currentLocale = Locale.CreateLocale(SystemLanguage.Danish);
+            } else {
+                currentLocale = Locale.CreateLocale(SystemLanguage.English);
+            }
+        }
+
         return currentLocale;
     }
 

@@ -35,7 +35,7 @@ public class MainManager : MonoBehaviour
     private int playerPoints;
     private string playerName = "Anonymous";
 
-    private bool isNewGame;
+    private bool isNewGame = true;
 
     private bool playRecordOnce;
     
@@ -122,27 +122,31 @@ public class MainManager : MonoBehaviour
             m_Started = false;
         }
 
-        // remember player record
-        int playerRecord = System.Convert.ToInt32(playerRecordText.text);
+        // Don't run this if we are in the editor
+        if (GameManager.Instance != null) {
 
-        // remember current best player record
-        int bestPlayerRecord = System.Convert.ToInt32(GameManager.Instance.GetRecordRecord());
+            // remember player record
+            int playerRecord = System.Convert.ToInt32(playerRecordText.text);
 
-        // If personal record is higher player record or best player/record then update UI
-        if (playerPoints > playerRecord) {
+            // remember current best player record
+            int bestPlayerRecord = System.Convert.ToInt32(GameManager.Instance.GetRecordRecord());
 
-            // update UI and remember personal record
-            if (GameManager.Instance != null) {
-                playerRecordText.text = playerPoints.ToString();
-                GameManager.Instance.SetPlayerRecord(playerRecordText.text);
+            // If personal record is higher player record or best player/record then update UI
+            if (playerPoints > playerRecord) {
 
+                // update UI and remember personal record
+                if (GameManager.Instance != null) {
 
-                // If player beaten the best player ever
-                if (playerPoints > bestPlayerRecord) {
+                    playerRecordText.text = playerPoints.ToString();
+                    GameManager.Instance.SetPlayerRecord(playerRecordText.text);
 
-                    // Update UI - The player automatically be remembered
-                    bestPlayerRecordNameText.text = playerText.text;
-                    bestPlayerRecordScoreText.text = playerPoints.ToString();
+                    // If player beaten the best player ever
+                    if (playerPoints > bestPlayerRecord) {
+
+                        // Update UI - The player automatically be remembered
+                        bestPlayerRecordNameText.text = playerText.text;
+                        bestPlayerRecordScoreText.text = playerPoints.ToString();
+                    }
                 }
             }
 
@@ -198,6 +202,8 @@ public class MainManager : MonoBehaviour
         retryButton.gameObject.SetActive(true);
         quitButton.gameObject.SetActive(true);
 
+        // Play game over sound
+        playerAudio.PlayOneShot(gameOverSound,1f);
     }
 
     public void RetryGame() {

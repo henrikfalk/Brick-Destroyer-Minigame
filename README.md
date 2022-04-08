@@ -26,7 +26,7 @@ Regards Henrik
 This is a simple retro breakout-style game in which you are getting points depending on how many bricks you destroy by a ball that you control by af paddle.
 
 Use left and right arrows on keyboard to move paddle.
-Use up or down arrows on keyboard to toggle cameraview.
+Use up or down arrows on keyboard to toggle cameraview between 2D and 3D.
 
 (Images)
 
@@ -34,7 +34,7 @@ Use up or down arrows on keyboard to toggle cameraview.
 Unity Editor v2020.3.32f1 running on Manjaro Linux.
 
 You need to open the"Menu" scene in order to run the game in the editor.
-You can however run the "Main" scene to run test the game functionality alone but it is not connected to the full game.
+You can however run the "Main" scene to run test the game functionality alone but it is not connected to the full game. The "Retry" button works.
 
 I made a lot of comments in the code for anyone who wants to learn how the code works.
 
@@ -73,6 +73,8 @@ I made some game scenes:
 - I added the game mechanic "levels" to the game. When all bricks are destroyed a new set of bricks spawn. Depending on the level the paddle gets smaller and the ball runs faster to a certain point. New bricks with more points at higher levels and at even higher levels the bricks get randomized. The higher level the smaller paddle and faster ball to a certain limit
 - You can see the player name, the current points and the all time record for the player in the UI
 - You can see the name and record of the best player ever played this game (unless the highscore has been reset)
+- Use the left and right arrow to move the paddle
+- Use the up or down arrow on the keyboard to toggle cameraview between 2D and 3D 
 
 ## What could be enhanced?
 - The LanguagePicker could have a better implementation
@@ -80,6 +82,5 @@ I made some game scenes:
 - The code can be optimized for speed and memory some places but since this is a small game it is not necessary
 - Some code can properly be optimized using better design but this version is based on my current knowledge of Unity and C# (.Net)
 - In very specific situations it seems as the ball is stuck at the walls. I have tried to better that situation but needs properly better code than the provided
-- You use the left and right arrow to move the paddle
-- You use the up or down arrow on the keyboard to toggle cameraview
+
 
