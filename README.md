@@ -28,8 +28,9 @@ This is a simple retro breakout-style game in which you are getting points depen
 Use left and right arrows on keyboard to move paddle.
 Use up or down arrows on keyboard to toggle cameraview between 2D and 3D.
 
-![Brick Defender Main 2D Image](Images/Brick-Defender-Main-2D.png | width=300)
-![Brick Defender Main 3D Image](Images/Brick-Defender-Main-3D.png | width=300)
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Main-2D.png" width="600">
+\
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Main-3D.png" width="600">
 
 ## Development environment
 Unity Editor v2020.3.32f1 running on Manjaro Linux.
@@ -47,7 +48,8 @@ I made some game scenes:
 - and a Main game scene
 
 ### Menu
-![Brick Defender Menu Image](Images/Brick-Defender-Menu.png | width=300)
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Menu.png" width="600" >
+
 - Contains Inputfield to enter the same og the player
 - The Inputfield is populated wirh the same og the last player
 - A "New game" button that strips the text in the Inputfield for whitespace and other unwanted characters
@@ -59,13 +61,13 @@ I made some game scenes:
 - A "Quit" button If the game is running as a native Linux application
 
 ### Highscore
-![Brick Defender Highscore Image](Images/Brick-Defender-Highscore.png | width=300)
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Highscore.png" width="600" >
 - Shows a list of the best ten players sorted from the best to the tenth best player
 - If fewer than ten players have played the list show all the players records
 - A "Return button" to the "Menu" scene
 
 ### Settings
-![Brick Defender Settings Image](Images/Brick-Defender-Settings.png | width=300)
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Settings.png" width="600" >
 - Shows a "Reset highscore" button that deletes all players that have been playing except if a name is entered in the inputfield. That player gets its record reset
 - Pressing the "Reset highscore" button opens a "are you sure?" dialog
 - Shows a custom "Language picker" widget in which you can select between two languages: English and Danish
@@ -73,8 +75,9 @@ I made some game scenes:
 - A "Return button" to the "Menu" scene
 
 ### Main
-![Brick Defender Menu Image](Images/Brick-Defender-Main-2D.png | width=300)
-![Brick Defender Menu Image](Images/Brick-Defender-Main-3D.png | width=300)
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Main-2D.png" width="600" >
+\
+<img src="https://raw.githubusercontent.com/henrikfalk/Brick-Destroyer-Minigame/main/Images/Brick-Defender-Main-3D.png" width="600" >
 - I made some fancier materials for the bricks
 - I added the game mechanic "levels" to the game. When all bricks are destroyed a new set of bricks spawn. Depending on the level the paddle gets smaller and the ball runs faster to a certain point. New bricks with more points at higher levels and at even higher levels the bricks get randomized. The higher level the smaller paddle and faster ball to a certain limit
 - You can see the player name, the current points and the all time record for the player in the UI
@@ -85,8 +88,9 @@ I made some game scenes:
 ## What could be enhanced?
 - The LanguagePicker could have a better implementation
 - Better UI graphics in the "Main" scene would be nice
+- Better resizing and positioning of UI elements depending on the game window size
 - The code can be optimized for speed and memory some places but since this is a small game it is not necessary
 - Some code can properly be optimized using better design but this version is based on my current knowledge of Unity and C# (.Net)
-- In very specific situations it seems as the ball is stuck at the walls. I have tried to better that situation but needs properly better code than the provided
+- In very specific situations it seems as the ball is stuck at the walls. I have tried to better that situation but still needs better code than the provided
 
 
